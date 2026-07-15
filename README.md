@@ -72,3 +72,9 @@ Contributions are welcome! If you would like to add new algorithms (e.g., A* Dia
 ## 📄 License
 
 MIT License. See `LICENSE` for details.
+
+
+---
+
+## 🌟 Credits
+Developed to help visualize computer science concepts, inspired by [The Digit HQ educational resources](https://thedigithq.com).
