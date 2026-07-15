@@ -1,0 +1,25 @@
+{
+  "name": "algosphere",
+  "version": "1.0.0",
+  "description": "Premium interactive visualizer for pathfinding and sorting algorithms.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "algorithm-visualizer",
+    "dijkstra-visualizer",
+    "astar-algorithm",
+    "sorting-visualizer",
+    "quicksort",
+    "mergesort",
+    "educational-tool"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}

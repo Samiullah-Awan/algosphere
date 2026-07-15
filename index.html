@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algosphere // Interactive Algorithm Visualizer</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Ambient glowing backgrounds -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <header class="app-header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                <span>Algo<span class="highlight">sphere</span></span>
+            </div>
+            
+            <div class="mode-selector card">
+                <button class="mode-btn active" id="btn-mode-pathfinding" data-mode="pathfinding">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+                    Pathfinding Grid
+                </button>
+                <button class="mode-btn" id="btn-mode-sorting" data-mode="sorting">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    Sorting Array
+                </button>
+            </div>
+
+            <div class="header-actions">
+                <div class="speed-control">
+                    <label for="speed-slider">Speed:</label>
+                    <input type="range" id="speed-slider" min="1" max="100" value="80">
+                    <span class="speed-label" id="speed-val">Fast</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="workspace">
+            
+            <!-- ==================== MODE 1: PATHFINDING ==================== -->
+            <section class="visualizer-section active" id="section-pathfinding">
+                <div class="control-panel card">
+                    <div class="control-group">
+                        <label for="algo-pathfinding">Algorithm</label>
+                        <select id="algo-pathfinding" class="custom-select">
+                            <option value="dijkstra" selected>Dijkstra's Algorithm</option>
+                            <option value="astar">A* Search (Heuristic)</option>
+                            <option value="bfs">Breadth-First Search (BFS)</option>
+                            <option value="dfs">Depth-First Search (DFS)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-actions">
+                        <button id="btn-path-start" class="btn btn-primary">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Visualize
+                        </button>
+                        <button id="btn-path-clear" class="btn">Clear Path</button>
+                        <button id="btn-path-reset" class="btn">Clear Board</button>
+                        <button id="btn-path-maze" class="btn">Generate Maze</button>
+                    </div>
+
+                    <div class="legend-panel">
+                        <div class="legend-item"><span class="legend-color start"></span><span>Start</span></div>
+                        <div class="legend-item"><span class="legend-color end"></span><span>Target</span></div>
+                        <div class="legend-item"><span class="legend-color wall"></span><span>Wall</span></div>
+                        <div class="legend-item"><span class="legend-color unvisited"></span><span>Unvisited</span></div>
+                        <div class="legend-item"><span class="legend-color visiting"></span><span>Visiting</span></div>
+                        <div class="legend-item"><span class="legend-color visited"></span><span>Visited</span></div>
+                        <div class="legend-item"><span class="legend-color path"></span><span>Path</span></div>
+                    </div>
+                </div>
+
+                <!-- Pathfinding Grid Container -->
+                <div class="canvas-container card">
+                    <div class="grid-scroll-wrapper">
+                        <div id="pathfinding-grid" class="grid-board">
+                            <!-- JS will generate 22 rows x 40 cols = 880 cells -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pathfinding Stats -->
+                <footer class="stats-panel card">
+                    <div class="stat-item">
+                        <span class="label">Visited Nodes</span>
+                        <span class="val" id="stat-path-visited">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Path Length</span>
+                        <span class="val" id="stat-path-length">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Status</span>
+                        <span class="val status-idle" id="stat-path-status">Idle</span>
+                    </div>
+                </footer>
+            </section>
+
+            <!-- ==================== MODE 2: SORTING ==================== -->
+            <section class="visualizer-section" id="section-sorting">
+                <div class="control-panel card">
+                    <div class="control-group">
+                        <label for="algo-sorting">Algorithm</label>
+                        <select id="algo-sorting" class="custom-select">
+                            <option value="quick" selected>Quick Sort</option>
+                            <option value="merge">Merge Sort</option>
+                            <option value="insertion">Insertion Sort</option>
+                            <option value="bubble">Bubble Sort</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="array-size-slider">Elements:</label>
+                        <input type="range" id="array-size-slider" min="10" max="120" value="60">
+                        <span class="slider-value-label" id="array-size-val">60</span>
+                    </div>
+
+                    <div class="control-actions">
+                        <button id="btn-sort-start" class="btn btn-primary">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Start Sorting
+                        </button>
+                        <button id="btn-sort-shuffle" class="btn">Shuffle Array</button>
+                    </div>
+                </div>
+
+                <!-- Sorting Visualizer Container -->
+                <div class="canvas-container card">
+                    <div id="sorting-container" class="sorting-board">
+                        <!-- JS dynamically inserts array bars -->
+                    </div>
+                </div>
+
+                <!-- Sorting Stats -->
+                <footer class="stats-panel card">
+                    <div class="stat-item">
+                        <span class="label">Comparisons</span>
+                        <span class="val" id="stat-sort-comparisons">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Array Accesses</span>
+                        <span class="val" id="stat-sort-accesses">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Time Elapsed</span>
+                        <span class="val" id="stat-sort-time">0ms</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="label">Status</span>
+                        <span class="val status-idle" id="stat-sort-status">Idle</span>
+                    </div>
+                </footer>
+            </section>
+        </main>
+    </div>
+
+    <!-- Alert toast notification -->
+    <div id="algoToast" class="toast hidden">Path found!</div>
+
+    <script src="app.js"></script>
+</body>
+</html>
